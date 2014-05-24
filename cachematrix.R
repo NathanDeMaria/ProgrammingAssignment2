@@ -1,9 +1,9 @@
-## Put comments here that give an overall description of what your
-## functions do
 
-## Write a short comment describing this function
-
+## makes a CacheMatrix, which is a list of four functions for
+	## getting and setting the value of a matrix, and getting and setting it's inverse
 makeCacheMatrix <- function(x = matrix()) {
+	
+	## the inverse is NULL until it is calculated
 	i <- NULL
 	set <- function(y) {
 		x <<- y
@@ -18,18 +18,21 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
-
+## returns the inverse of a CacheMatrix
+## in order to save comutation time, it saves the value after the
+		## first time the inverse is computed
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-	i <- x$getmean()
-	if(!is.null(x)){
+	i <- x$getinverse()
+	
+	## if the inverse has already been calculated, return it immediately
+	if(!is.null(i)){
 		message('getting cached inverse')
-		return(m)
+		return(i)
 	}
 	
+	## else, calculate it, save it, and return it
 	data <- x$get()
 	i <- solve(data,...)
-	x$setmean(i)
+	x$setinverse(i)
 	i
 }
